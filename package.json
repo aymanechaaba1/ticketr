@@ -28,6 +28,7 @@
     "stripe": "^17.3.1",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
+    "vercel": "^39.1.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
