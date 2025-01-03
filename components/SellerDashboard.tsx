@@ -1,18 +1,19 @@
-"use client";
-import { createStripeConnectAccountLink } from "@/app/actions/createStripeConnectAccountLink";
-import { createStripeConnectCustomer } from "@/app/actions/createStripeConnectCustomer";
-import { api } from "@/convex/_generated/api";
-import { useUser } from "@clerk/nextjs";
-import { useQuery } from "convex/react";
+'use client';
 
-import { useRouter } from "next/navigation";
-import React, { useState, useEffect } from "react";
-import { createStripeConnectLoginLink } from "@/app/actions/createStripeConnectLoginLink";
-import { getStripeConnectAccountStatus } from "@/app/actions/getStripeConnectAccountStatus";
-import type { AccountStatus } from "@/app/actions/getStripeConnectAccountStatus";
-import { CalendarDays, Cog, Plus } from "lucide-react";
-import Link from "next/link";
-import Spinner from "./Spinner";
+import { createStripeConnectAccountLink } from '@/app/actions/createStripeConnectAccountLink';
+import { createStripeConnectCustomer } from '@/app/actions/createStripeConnectCustomer';
+import { api } from '@/convex/_generated/api';
+import { useUser } from '@clerk/nextjs';
+import { useQuery } from 'convex/react';
+
+import { useRouter } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
+import { createStripeConnectLoginLink } from '@/app/actions/createStripeConnectLoginLink';
+import { getStripeConnectAccountStatus } from '@/app/actions/getStripeConnectAccountStatus';
+import type { AccountStatus } from '@/app/actions/getStripeConnectAccountStatus';
+import { CalendarDays, Cog, Plus } from 'lucide-react';
+import Link from 'next/link';
+import Spinner from './Spinner';
 
 export default function SellerDashboard() {
   const [accountCreatePending, setAccountCreatePending] = useState(false);
@@ -25,7 +26,7 @@ export default function SellerDashboard() {
   const router = useRouter();
   const { user } = useUser();
   const stripeConnectId = useQuery(api.users.getUsersStripeConnectId, {
-    userId: user?.id || "",
+    userId: user?.id || '',
   });
 
   const isReadyToAcceptPayments =
@@ -48,7 +49,7 @@ export default function SellerDashboard() {
         window.location.href = loginUrl;
       }
     } catch (error) {
-      console.error("Error accessing Stripe Connect portal:", error);
+      console.error('Error accessing Stripe Connect portal:', error);
       setError(true);
     }
   };
@@ -59,7 +60,7 @@ export default function SellerDashboard() {
         const status = await getStripeConnectAccountStatus(stripeConnectId);
         setAccountStatus(status);
       } catch (error) {
-        console.error("Error fetching account status:", error);
+        console.error('Error fetching account status:', error);
       }
     }
   };
@@ -129,7 +130,7 @@ export default function SellerDashboard() {
                     setAccountCreatePending(false);
                   } catch (error) {
                     console.error(
-                      "Error creating Stripe Connect customer:",
+                      'Error creating Stripe Connect customer:',
                       error
                     );
                     setError(true);
@@ -157,12 +158,12 @@ export default function SellerDashboard() {
                     <div
                       className={`w-3 h-3 rounded-full mr-2 ${
                         accountStatus.isActive
-                          ? "bg-green-500"
-                          : "bg-yellow-500"
+                          ? 'bg-green-500'
+                          : 'bg-yellow-500'
                       }`}
                     />
                     <span className="text-lg font-semibold">
-                      {accountStatus.isActive ? "Active" : "Pending Setup"}
+                      {accountStatus.isActive ? 'Active' : 'Pending Setup'}
                     </span>
                   </div>
                 </div>
@@ -177,8 +178,8 @@ export default function SellerDashboard() {
                       <svg
                         className={`w-5 h-5 ${
                           accountStatus.chargesEnabled
-                            ? "text-green-500"
-                            : "text-gray-400"
+                            ? 'text-green-500'
+                            : 'text-gray-400'
                         }`}
                         fill="currentColor"
                         viewBox="0 0 20 20"
@@ -191,16 +192,16 @@ export default function SellerDashboard() {
                       </svg>
                       <span className="ml-2">
                         {accountStatus.chargesEnabled
-                          ? "Can accept payments"
-                          : "Cannot accept payments yet"}
+                          ? 'Can accept payments'
+                          : 'Cannot accept payments yet'}
                       </span>
                     </div>
                     <div className="flex items-center">
                       <svg
                         className={`w-5 h-5 ${
                           accountStatus.payoutsEnabled
-                            ? "text-green-500"
-                            : "text-gray-400"
+                            ? 'text-green-500'
+                            : 'text-gray-400'
                         }`}
                         fill="currentColor"
                         viewBox="0 0 20 20"
@@ -213,8 +214,8 @@ export default function SellerDashboard() {
                       </svg>
                       <span className="ml-2">
                         {accountStatus.payoutsEnabled
-                          ? "Can receive payouts"
-                          : "Cannot receive payouts yet"}
+                          ? 'Can receive payouts'
+                          : 'Cannot receive payouts yet'}
                       </span>
                     </div>
                   </div>
@@ -234,7 +235,7 @@ export default function SellerDashboard() {
                       </p>
                       <ul className="list-disc pl-5 text-yellow-700 text-sm">
                         {accountStatus.requirements.currently_due.map((req) => (
-                          <li key={req}>{req.replace(/_/g, " ")}</li>
+                          <li key={req}>{req.replace(/_/g, ' ')}</li>
                         ))}
                       </ul>
                     </div>
@@ -247,7 +248,7 @@ export default function SellerDashboard() {
                       <ul className="list-disc pl-5 text-yellow-700 text-sm">
                         {accountStatus.requirements.eventually_due.map(
                           (req) => (
-                            <li key={req}>{req.replace(/_/g, " ")}</li>
+                            <li key={req}>{req.replace(/_/g, ' ')}</li>
                           )
                         )}
                       </ul>
@@ -267,7 +268,7 @@ export default function SellerDashboard() {
                           router.push(url);
                         } catch (error) {
                           console.error(
-                            "Error creating Stripe Connect account link:",
+                            'Error creating Stripe Connect account link:',
                             error
                           );
                           setError(true);
